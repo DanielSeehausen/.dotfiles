@@ -71,12 +71,6 @@ git_page_maybe() {
     fi
 }
 
-gitgimme () {
-  git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
-  git fetch --all
-  git pull --all
-}
-
 # default log...nice and sloppy aliasing git ;/
 git() {
     if [[ $@ == "log" ]]; then
@@ -85,3 +79,11 @@ git() {
         command git "$@"
     fi
 }
+
+gitgimme () {
+  git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
+  git fetch --all
+  git pull --all
+}
+alias gac="git add . && git commit -m ${1}"
+gacp () { git add . && git commit -m "$@" && git push; }
