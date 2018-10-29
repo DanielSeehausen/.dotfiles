@@ -14,7 +14,7 @@
 
 ### To replicate home directoy on new machine:
 ```bash
-    git clone --separate-git-dir=$HOME/.dotfiles /path/to/repo $HOME/dotfiles-tmp
+    git clone --separate-git-dir=$HOME/.dotfiles /path/to/remote/git-repo $HOME/dotfiles-tmp
     cp ~/dotfiles-tmp/.gitmodules ~  # If you use Git submodules
     rm -r ~/dotfiles-tmp/
     alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
