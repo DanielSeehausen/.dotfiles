@@ -60,16 +60,9 @@ alias tlist='~/todo_list_cli/index.py list'
 
 
 
-### TODO still use?
 if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
   __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
   source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
-fi
-
-### TODO need now that is sourced at the top?
-# for git auto completion
-if [ -f ~/.git-completion.bash ]; then
-  . ~/.git-completion.bash
 fi
 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
