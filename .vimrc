@@ -11,13 +11,15 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'severin-lemaignan/vim-minimap'
 Plugin 'kien/ctrlp.vim'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'scrooloose/syntastic'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 "syntax highlighting
-colorscheme slate
+colorscheme jellybeans 
 syntax on
 set hlsearch
 
@@ -44,6 +46,7 @@ set wildmode=longest:list,full
 "NERDTREE
 map <C-n> :NERDTreeToggle<CR>
 map <C-j> :!python -m json.tool<CR>
+let NERDTreeShowHidden=1
 
 "file tree
 function! ToggleVExplorer()
@@ -71,4 +74,17 @@ set cursorline
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
-
+"Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+"Symbols
+let g:syntastic_error_symbol = "❌"
+let g:syntastic_warning_symbol = "⚠️ "
+let g:syntastic_style_error_symbol = '⁉️ '
+"JS
+let g:syntastic_javascript_checkers = ['eslint']
