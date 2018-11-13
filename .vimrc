@@ -20,7 +20,6 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'epmatsw/ag.vim'
 Plugin 'digitaltoad/vim-pug'
 Plugin 'tpope/vim-surround'
-Plugin 'Yggdroot/indentLine'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -130,11 +129,7 @@ set timeoutlen=1000 ttimeoutlen=0
 set guifont=Menlo\ Mono:h14
 "some buffer swapping QoL (probably should remove this -- ctrl ] needed)
 nnoremap <C-]> :bn<CR>
-
 "needed so that vim still understands escape sequences (otherwise scrolling will go into insert mode, it will open with fzf lookup window, etc.)
 nnoremap <esc>^[ <esc>^[
 "indent line breaks
 set breakindent
-"use system clipboard by default
-set clipboard=unnamed
-
