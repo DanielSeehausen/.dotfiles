@@ -11,15 +11,24 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'severin-lemaignan/vim-minimap'
 Plugin 'kien/ctrlp.vim'
-Plugin 'nanotech/jellybeans.vim'
+"Plugin 'nanotech/jellybeans.vim'
+Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/syntastic'
+Plugin 'junegunn/fzf'
+Plugin 'itchyny/lightline.vim'
+"Plugin 'roman/golden-ratio'
+Plugin 'epmatsw/ag.vim'
+Plugin 'digitaltoad/vim-pug'
+Plugin 'tpope/vim-surround'
+Plugin 'Yggdroot/indentLine'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-"syntax highlighting
-colorscheme jellybeans 
+"appearance
+colorscheme gruvbox 
+set background=dark
 syntax on
 set hlsearch
 
@@ -74,17 +83,58 @@ set cursorline
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
-"Syntastic
+"syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 2
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 "Symbols
 let g:syntastic_error_symbol = "❌"
-let g:syntastic_warning_symbol = "⚠️ "
-let g:syntastic_style_error_symbol = '⁉️ '
+let g:syntastic_warning_symbol = "∙∙"
+let g:syntastic_style_error_symbol = '∙∙'
+"hi behind the symbols
+hi SyntasticErrorSign ctermfg=243 ctermbg=236 guifg=#777777 guibg=darkgrey
+"in text error highlighting -- [SyntasticError SyntasticWarning SyntasticErrorSymbol SyntasticErrorLine]
+"hi SyntasticErrorLine ctermfg=013 ctermbg=013 guifg=#0000ff guibg=#0000ff
+"hi SyntasticErrorSymbol ctermfg=013 ctermbg=013 guifg=#0000ff guibg=#0000ff
 "JS
 let g:syntastic_javascript_checkers = ['eslint']
+
+"fzf
+map ; :FZF<CR>
+
+"lightline
+set laststatus=2
+
+" The Silver Searcher -- Use ag over grep
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+" search from project root instead of cw
+let g:ag_working_path_mode="r"
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" bind \ (backward slash) to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap \ :Ag<SPACE>
+
+"general editor 
+set timeoutlen=1000 ttimeoutlen=0
+set guifont=Menlo\ Mono:h14
+"some buffer swapping QoL (probably should remove this -- ctrl ] needed)
+nnoremap <C-]> :bn<CR>
+
+"needed so that vim still understands escape sequences (otherwise scrolling will go into insert mode, it will open with fzf lookup window, etc.)
+nnoremap <esc>^[ <esc>^[
+"indent line breaks
+set breakindent
+"use system clipboard by default
+set clipboard=unnamed
+
