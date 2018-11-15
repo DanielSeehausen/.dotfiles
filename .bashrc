@@ -69,10 +69,17 @@ fi
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export NVM_DIR="$HOME/.nvm"
 
+# open repo/branch i github.com
+alias gh="open `git remote -v | grep fetch | awk '{print $2}' | sed 's/git@/http:\/\//' | sed 's/com:/com\//'`| head -n1"
 
+# remove all local branches but master and current branch
+alias gbr='git branch | egrep -v "(master|\*)" | xargs git branch -D'
 alias cssh='i2cssh -c'
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# make sure fzf uses ag for vim life
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
