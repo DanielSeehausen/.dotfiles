@@ -10,8 +10,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'severin-lemaignan/vim-minimap'
-Plugin 'kien/ctrlp.vim'
-"Plugin 'nanotech/jellybeans.vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/syntastic'
 Plugin 'junegunn/fzf'
@@ -20,6 +18,7 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'epmatsw/ag.vim'
 Plugin 'digitaltoad/vim-pug'
 Plugin 'tpope/vim-surround'
+Plugin 'slim-template/vim-slim.git'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -27,6 +26,7 @@ filetype plugin indent on    " required
 
 "appearance
 colorscheme gruvbox 
+set guifont=Menlo\ Mono:h14
 set background=dark
 syntax on
 set hlsearch
@@ -102,19 +102,12 @@ hi SyntasticErrorSign ctermfg=243 ctermbg=236 guifg=#777777 guibg=darkgrey
 "JS
 let g:syntastic_javascript_checkers = ['eslint']
 
-"fzf
-map ; :FZF<CR>
-
 "lightline
 set laststatus=2
 
 " The Silver Searcher -- Use ag over grep
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
 endif
 " search from project root instead of cw
 let g:ag_working_path_mode="r"
@@ -124,9 +117,11 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<SPACE>
 
+"fzf
+noremap <C-p> :FZF<CR>
+
 "general editor 
-set timeoutlen=1000 ttimeoutlen=0
-set guifont=Menlo\ Mono:h14
+set timeoutlen=750 ttimeoutlen=0
 "some buffer swapping QoL (probably should remove this -- ctrl ] needed)
 nnoremap <C-]> :bn<CR>
 "needed so that vim still understands escape sequences (otherwise scrolling will go into insert mode, it will open with fzf lookup window, etc.)
