@@ -19,6 +19,7 @@ Plugin 'epmatsw/ag.vim'
 Plugin 'digitaltoad/vim-pug'
 Plugin 'tpope/vim-surround'
 Plugin 'slim-template/vim-slim.git'
+Plugin 'janko-m/vim-test'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -48,8 +49,6 @@ set backspace=2
 ":e autocomplete settings
 set wildmenu
 set wildmode=longest:list,full
-
-"format the statusline
 
 "NERDTREE
 map <C-n> :NERDTreeToggle<CR>
@@ -100,7 +99,7 @@ hi SyntasticErrorSign ctermfg=243 ctermbg=236 guifg=#777777 guibg=darkgrey
 "hi SyntasticErrorLine ctermfg=013 ctermbg=013 guifg=#0000ff guibg=#0000ff
 "hi SyntasticErrorSymbol ctermfg=013 ctermbg=013 guifg=#0000ff guibg=#0000ff
 "JS
-let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_javascript_checkers = ['eslint']
 
 "lightline
 set laststatus=2
@@ -113,12 +112,16 @@ endif
 let g:ag_working_path_mode="r"
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-" bind \ (backward slash) to grep shortcut
+" bind grep shortcut
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap \ :Ag<SPACE>
+nnoremap <C-\> :Ag<SPACE>
 
-"fzf
+"fzf replacing ctrlp
 noremap <C-p> :FZF<CR>
+
+"vim-test 
+nnoremap <Leader>t :w<CR>:TestNearest<CR>
+nnoremap <Leader>T :w<CR>:TestFile<CR>
 
 "general editor 
 set timeoutlen=750 ttimeoutlen=0
