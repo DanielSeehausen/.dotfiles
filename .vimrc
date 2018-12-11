@@ -52,6 +52,7 @@ set wildmode=longest:list,full
 
 "NERDTREE
 map <C-n> :NERDTreeToggle<CR>
+nmap <Leader>f :NERDTreeFind<CR>
 map <C-j> :!python -m json.tool<CR>
 let NERDTreeShowHidden=1
 
