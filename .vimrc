@@ -14,19 +14,23 @@ Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/syntastic'
 Plugin 'junegunn/fzf'
 Plugin 'itchyny/lightline.vim'
-"Plugin 'roman/golden-ratio'
 Plugin 'epmatsw/ag.vim'
 Plugin 'digitaltoad/vim-pug'
 Plugin 'tpope/vim-surround'
 Plugin 'slim-template/vim-slim.git'
 Plugin 'janko-m/vim-test'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'ntpeters/vim-better-whitespace' "This doesn't need to be a plugin
+Plugin 'nathanaelkane/vim-indent-guides'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 "appearance
-colorscheme gruvbox 
+colorscheme gruvbox
 set guifont=Menlo\ Mono:h14
 set background=dark
 syntax on
@@ -93,42 +97,57 @@ let g:syntastic_check_on_wq = 1
 "Symbols
 let g:syntastic_error_symbol = "❌"
 let g:syntastic_warning_symbol = "∙∙"
-let g:syntastic_style_error_symbol = '∙∙'
+let g:syntastic_style_error_symbol = '∙'
 "hi behind the symbols
 hi SyntasticErrorSign ctermfg=243 ctermbg=236 guifg=#777777 guibg=darkgrey
 "in text error highlighting -- [SyntasticError SyntasticWarning SyntasticErrorSymbol SyntasticErrorLine]
 "hi SyntasticErrorLine ctermfg=013 ctermbg=013 guifg=#0000ff guibg=#0000ff
 "hi SyntasticErrorSymbol ctermfg=013 ctermbg=013 guifg=#0000ff guibg=#0000ff
 "JS
-"let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
 
 "lightline
 set laststatus=2
 
-" The Silver Searcher -- Use ag over grep
+"The Silver Searcher -- Use ag over grep
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 endif
-" search from project root instead of cw
+"search from project root instead of cw
 let g:ag_working_path_mode="r"
-" bind K to grep word under cursor
+"bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-" bind grep shortcut
+"bind grep shortcut
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap <C-\> :Ag<SPACE>
 
 "fzf replacing ctrlp
 noremap <C-p> :FZF<CR>
 
-"vim-test 
+"vim-test
 nnoremap <Leader>t :w<CR>:TestNearest<CR>
 nnoremap <Leader>T :w<CR>:TestFile<CR>
 
-"general editor 
+"ntpeters/vim-better-whitespace
+highlight ExtraWhitespace ctermbg=darkgrey
+let g:show_spaces_that_precede_tabs=1
+
+"nathanaelkane/vim-indent-guides
+let g:indent_guides_enable_on_vim_startup = 1 "indent guides enabled by def
+hi IndentGuidesOdd  ctermbg=236
+hi IndentGuidesEven ctermbg=235
+
+" *** general editor ***
 set timeoutlen=750 ttimeoutlen=0
-"some buffer swapping QoL (probably should remove this -- ctrl ] needed)
-nnoremap <C-]> :bn<CR>
+"The length of time Vim waits before triggering the plugins
+set updatetime=100
 "needed so that vim still understands escape sequences (otherwise scrolling will go into insert mode, it will open with fzf lookup window, etc.)
 nnoremap <esc>^[ <esc>^[
 "indent line breaks
-set breakindent
+set breakindent " is this working as desired?
+"Every time the user issues a :w command, Vim will automatically remove all trailing whitespace before saving
+autocmd BufWritePre * %s/\s\+$//e
+"Spellcheck
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd FileType gitcommit setlocal spell
