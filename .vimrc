@@ -24,6 +24,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'ntpeters/vim-better-whitespace' "This doesn't need to be a plugin
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'tpope/vim-repeat' "allows dot command to repeat some plugin maps -- currently just using this for rrepeating surround
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -151,3 +152,12 @@ autocmd BufWritePre * %s/\s\+$//e
 "Spellcheck
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd FileType gitcommit setlocal spell
+
+"THIS ALSO AFFECTS AUTOCOMPLETION
+set ignorecase
+
+"be a hard working good boy
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>

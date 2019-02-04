@@ -8,6 +8,7 @@ alias ls3='tree -L 3'
 alias cdd='cd ~/Development'
 alias ls='ls -a1F'
 alias ll='ls -alF'
+alias tar='/usr/bin/tar'
 
 export PATH="$HOME/.bin:~/bin:$PATH"
 export GPG_TTY=$(tty)
@@ -72,6 +73,8 @@ export NVM_DIR="$HOME/.nvm"
 
 # open repo/branch i github.com
 alias gh="open `git remote -v | grep fetch | awk '{print $2}' | sed 's/git@/http:\/\//' | sed 's/com:/com\//'`| head -n1"
+
+alias gcan="git commit --amend --no-edit"
 
 # remove all local branches but master and current branch
 alias gbr='git branch | egrep -v "(master|\*)" | xargs git branch -D'
