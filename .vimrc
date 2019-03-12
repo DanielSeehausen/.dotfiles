@@ -127,8 +127,11 @@ nnoremap <C-\> :Ag<SPACE>
 noremap <C-p> :FZF<CR>
 
 "vim-test
+let test#javascript#jest#file_pattern = '\vtest?/.*\.(js|jsx|coffee)$'
+let test#javascript#jest#executable = 'yarn test'
 nnoremap <Leader>t :w<CR>:TestNearest<CR>
 nnoremap <Leader>T :w<CR>:TestFile<CR>
+nnoremap <Leader>l :w<CR>:TestLast<CR>
 
 "ntpeters/vim-better-whitespace
 highlight ExtraWhitespace ctermbg=darkgrey
@@ -152,12 +155,8 @@ autocmd BufWritePre * %s/\s\+$//e
 "Spellcheck
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd FileType gitcommit setlocal spell
-
+"same as vim jesus tpope's unimpaired plugin mappings. newline above/below cursor without entering insert mode
+nnoremap <silent> [<space>  :<c-u>put!=repeat([''],v:count)<bar>']+1<cr>
+nnoremap <silent> ]<space>  :<c-u>put =repeat([''],v:count)<bar>'[-1<cr>
 "THIS ALSO AFFECTS AUTOCOMPLETION
 set ignorecase
-
-"be a hard working good boy
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
