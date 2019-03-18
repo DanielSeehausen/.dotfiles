@@ -2,9 +2,6 @@
 # for usage instructions
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias ctags="`brew --prefix`/bin/ctags" # TODO what do?
-alias ls1='tree -L 1'
-alias ls2='tree -L 2'
-alias ls3='tree -L 3'
 alias cdd='cd ~/Development'
 alias ls='ls -a1F'
 alias ll='ls -alF'
@@ -16,6 +13,7 @@ export EDITOR=vim
 
 source ~/git-completion.bash
 source ~/.githelpers
+source ~/.caphelpers
 bind "set completion-ignore-case on"
 bind "set show-all-if-ambiguous on"
 
