@@ -1,9 +1,15 @@
 {
-   “extends”: “airbnb”,
-   “env”: {
-       “es6”: true
-   },
-   "parserOptions": {
-    "sourceType": "module"
-   }
+  extends: "airbnb",
+  "env": {
+    "es6": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    semi: 0
+  }
 }
