@@ -8,23 +8,18 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'severin-lemaignan/vim-minimap'
-Plugin 'morhetz/gruvbox'
+Plugin 'tpope/vim-surround'
+Plugin 'morhetz/gruvbox' "colorscheme
+Plugin 'itchyny/lightline.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'junegunn/fzf'
-Plugin 'itchyny/lightline.vim'
 Plugin 'epmatsw/ag.vim'
-Plugin 'digitaltoad/vim-pug'
-Plugin 'tpope/vim-surround'
-Plugin 'slim-template/vim-slim.git'
 Plugin 'janko-m/vim-test'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
-Plugin 'ntpeters/vim-better-whitespace' "This doesn't need to be a plugin
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'tpope/vim-repeat' "allows dot command to repeat some plugin maps -- currently just using this for rrepeating surround
+Plugin 'ntpeters/vim-better-whitespace' "highlights trailing and between/pre tab whitespaces
+Plugin 'nathanaelkane/vim-indent-guides' "gentle highlighting to view tab columns
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -58,32 +53,11 @@ set wildmode=longest:list,full
 "NERDTREE
 map <C-n> :NERDTreeToggle<CR>
 nmap <Leader>f :NERDTreeFind<CR>
-map <C-j> :!python -m json.tool<CR>
+nmap <Leader>r :NERDTreeRefreshRoot
 let NERDTreeShowHidden=1
 
-"file tree
-function! ToggleVExplorer()
-  if exists("t:expl_buf_num")
-    let expl_win_num = bufwinnr(t:expl_buf_num)
-    if expl_win_num != -1
-      let cur_win_nr = winnr()
-      exec expl_win_num . 'wincmd w'
-      close
-      exec cur_win_nr . 'wincmd w'
-      unlet t:expl_buf_num
-    else
-      unlet t:expl_buf_num
-    endif
-  else
-    exec '1wincmd w'
-    Vexplore
-    let t:expl_buf_num = bufnr("%")
-  endif
-endfunction
-set tags=tags
-
 "cursor
-set cursorline
+set cursorline "highlights line cursor is on
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
@@ -101,9 +75,6 @@ let g:syntastic_warning_symbol = "∙∙"
 let g:syntastic_style_error_symbol = '∙'
 "hi behind the symbols
 hi SyntasticErrorSign ctermfg=243 ctermbg=236 guifg=#777777 guibg=darkgrey
-"in text error highlighting -- [SyntasticError SyntasticWarning SyntasticErrorSymbol SyntasticErrorLine]
-"hi SyntasticErrorLine ctermfg=013 ctermbg=013 guifg=#0000ff guibg=#0000ff
-"hi SyntasticErrorSymbol ctermfg=013 ctermbg=013 guifg=#0000ff guibg=#0000ff
 "JS
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
@@ -133,7 +104,8 @@ nnoremap <Leader>t :w<CR>:TestNearest<CR>
 nnoremap <Leader>T :w<CR>:TestFile<CR>
 nnoremap <Leader>l :w<CR>:TestLast<CR>
 
-"ntpeters/vim-better-whitespace
+"ntpeters/vim-better-whitespace highlights trailing whitespaces and
+"whitespaces between/preceeding tabs
 highlight ExtraWhitespace ctermbg=darkgrey
 let g:show_spaces_that_precede_tabs=1
 
@@ -148,10 +120,10 @@ set timeoutlen=750 ttimeoutlen=0
 set updatetime=100
 "needed so that vim still understands escape sequences (otherwise scrolling will go into insert mode, it will open with fzf lookup window, etc.)
 nnoremap <esc>^[ <esc>^[
-"indent line breaks
-set breakindent " is this working as desired?
 "Every time the user issues a :w command, Vim will automatically remove all trailing whitespace before saving
 autocmd BufWritePre * %s/\s\+$//e
+"indent soft wraps visually
+set breakindent
 "Spellcheck
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd FileType gitcommit setlocal spell
