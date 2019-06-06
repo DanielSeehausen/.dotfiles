@@ -122,8 +122,9 @@ set updatetime=100
 nnoremap <esc>^[ <esc>^[
 "Every time the user issues a :w command, Vim will automatically remove all trailing whitespace before saving
 autocmd BufWritePre * %s/\s\+$//e
-"Save on exit insert mode
+"Save on exit insert mode and focus lost
 autocmd InsertLeave * write
+:au FocusLost * :wa
 "indent soft wraps visually
 set breakindent
 "Spellcheck
