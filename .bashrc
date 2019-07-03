@@ -85,3 +85,5 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 # make sure fzf uses ag for vim life
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+
+alias python="python3.7"
