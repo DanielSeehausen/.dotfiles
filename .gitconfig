@@ -9,6 +9,7 @@
   st = status
   co = checkout
   amend = commit --amend
+  gcan = commit --amend --no-edit
   # Fancy logging
   l = "!. ~/.githelpers && pretty_git_log"
 [gpg]
