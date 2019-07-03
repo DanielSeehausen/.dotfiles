@@ -7,6 +7,7 @@
   ui = auto
 [alias]
   st = status
+  st = show
   co = checkout
   amend = commit --amend
   gcan = commit --amend --no-edit
