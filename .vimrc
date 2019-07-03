@@ -10,7 +10,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'morhetz/gruvbox' "colorscheme
-Plugin 'itchyny/lightline.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'junegunn/fzf'
 Plugin 'epmatsw/ag.vim'
@@ -78,9 +77,6 @@ hi SyntasticErrorSign ctermfg=243 ctermbg=236 guifg=#777777 guibg=darkgrey
 "JS
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
-
-"lightline
-set laststatus=2
 
 "The Silver Searcher -- Use ag over grep
 if executable('ag')

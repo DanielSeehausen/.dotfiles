@@ -11,7 +11,5 @@
   amend = commit --amend
   # Fancy logging
   l = "!. ~/.githelpers && pretty_git_log"
-[commit]
-	gpgsign = true
 [gpg]
-	program = gpg
+	program = gpg2

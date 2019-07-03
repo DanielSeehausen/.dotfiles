@@ -2,7 +2,7 @@
 # for usage instructions
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias ctags="`brew --prefix`/bin/ctags" # TODO what do?
-alias cdd='cd ~/Development'
+alias cdd='cd ~/Development/ospin/'
 alias ls='ls -a1F'
 alias ll='ls -alF'
 alias tar='/usr/bin/tar'
@@ -13,7 +13,6 @@ export EDITOR=vim
 
 source ~/git-completion.bash
 source ~/.githelpers
-source ~/.caphelpers
 bind "set completion-ignore-case on"
 bind "set show-all-if-ambiguous on"
 
@@ -87,3 +86,13 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 
 alias python="python3.7"
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.bash ] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.bash
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.bash ] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.bash
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.bash ] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.bash
