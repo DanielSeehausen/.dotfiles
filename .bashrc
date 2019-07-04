@@ -1,4 +1,4 @@
-# VC alias for dotfiles. git bare repo kept in .dotfiles. See ~/.README
+# VC alias for dotfiles -- git bare repo kept in .dotfiles. See ~/.README
 # for usage instructions
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias ctags="`brew --prefix`/bin/ctags" # TODO what do?
