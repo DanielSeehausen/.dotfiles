@@ -14,6 +14,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'junegunn/fzf'
 Plugin 'epmatsw/ag.vim'
 Plugin 'janko-m/vim-test'
+Plugin 'itchyny/lightline.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
@@ -95,14 +96,15 @@ noremap <C-p> :FZF<CR>
 
 "vim-test
 let test#javascript#jest#file_pattern = '\vtest?/.*\.(js|jsx|coffee)$'
-let test#javascript#jest#executable = 'yarn test'
+let test#javascript#jest#executable = 'npm run test'
 nnoremap <Leader>t :w<CR>:TestNearest<CR>
 nnoremap <Leader>T :w<CR>:TestFile<CR>
 nnoremap <Leader>l :w<CR>:TestLast<CR>
+nnoremap <Leader>A :w<CR>:!npm run test<CR>
 
 "ntpeters/vim-better-whitespace highlights trailing whitespaces and
 "whitespaces between/preceeding tabs
-highlight ExtraWhitespace ctermbg=darkgrey
+hi ExtraWhitespace ctermbg=darkgrey
 let g:show_spaces_that_precede_tabs=1
 
 "nathanaelkane/vim-indent-guides
@@ -131,3 +133,11 @@ nnoremap <silent> [<space>  :<c-u>put!=repeat([''],v:count)<bar>']+1<cr>
 nnoremap <silent> ]<space>  :<c-u>put =repeat([''],v:count)<bar>'[-1<cr>
 "THIS ALSO AFFECTS AUTOCOMPLETION
 set ignorecase
+"auto reload files that have been changed
+set autoread
+
+
+
+
+"temporary :p
+nnoremap ;; :%s/;$//<CR>
