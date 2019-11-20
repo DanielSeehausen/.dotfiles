@@ -17,9 +17,14 @@ Plugin 'janko-m/vim-test'
 Plugin 'itchyny/lightline.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'pangloss/vim-javascript'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'peitalin/vim-jsx-typescript'
 Plugin 'mxw/vim-jsx'
 Plugin 'ntpeters/vim-better-whitespace' "highlights trailing and between/pre tab whitespaces
 Plugin 'nathanaelkane/vim-indent-guides' "gentle highlighting to view tab columns
+
+autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -55,6 +60,8 @@ map <C-n> :NERDTreeToggle<CR>
 nmap <Leader>f :NERDTreeFind<CR>
 nmap <Leader>r :NERDTreeRefreshRoot
 let NERDTreeShowHidden=1
+set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.hg,*.DS_Store,*.min.*
+let NERDTreeRespectWildIgnore=1
 
 "cursor
 set cursorline "highlights line cursor is on
@@ -94,13 +101,34 @@ nnoremap <C-\> :Ag<SPACE>
 "fzf replacing ctrlp
 noremap <C-p> :FZF<CR>
 
-"vim-test
+"vim-test (this helps with some package.json resolution instead of looking in
+"root, which is a problem with mono repos)
+let g:root_markers = ['package.json', '.git/']
+function! s:RunVimTest(cmd)
+    " I guess this part could be replaced by projectionist#project_root
+    for marker in g:root_markers
+        let marker_file = findfile(marker, expand('%:p:h') . ';')
+        if strlen(marker_file) > 0
+            let g:test#project_root = fnamemodify(marker_file, ":p:h")
+            break
+        endif
+        let marker_dir = finddir(marker, expand('%:p:h') . ';')
+        if strlen(marker_dir) > 0
+            let g:test#project_root = fnamemodify(marker_dir, ":p:h")
+            break
+        endif
+    endfor
+
+    execute a:cmd
+endfunction
+
+nnoremap <leader>T :w \| :call <SID>RunVimTest('TestFile')<cr>
+nnoremap <leader>t :w \| :call <SID>RunVimTest('TestNearest')<cr>
+nnoremap <leader>A :w \| :call <SID>RunVimTest('TestSuite')<cr>
+nnoremap <leader>l :w \| :call <SID>RunVimTest('TestLast')<cr>
+
 let test#javascript#jest#file_pattern = '\vtest?/.*\.(js|jsx|coffee)$'
 let test#javascript#jest#executable = 'npm run test'
-nnoremap <Leader>t :w<CR>:TestNearest<CR>
-nnoremap <Leader>T :w<CR>:TestFile<CR>
-nnoremap <Leader>l :w<CR>:TestLast<CR>
-nnoremap <Leader>A :w<CR>:!npm run test<CR>
 
 "ntpeters/vim-better-whitespace highlights trailing whitespaces and
 "whitespaces between/preceeding tabs
@@ -118,11 +146,11 @@ set timeoutlen=750 ttimeoutlen=0
 set updatetime=100
 "needed so that vim still understands escape sequences (otherwise scrolling will go into insert mode, it will open with fzf lookup window, etc.)
 nnoremap <esc>^[ <esc>^[
-"Every time the user issues a :w command, Vim will automatically remove all trailing whitespace before saving
+"remove all trailing whitespace before :w events
 autocmd BufWritePre * %s/\s\+$//e
 "Save on exit insert mode and focus lost
 autocmd InsertLeave * write
-:au FocusLost * :wa
+au FocusLost * :wa
 "indent soft wraps visually
 set breakindent
 "Spellcheck
@@ -136,8 +164,18 @@ set ignorecase
 "auto reload files that have been changed
 set autoread
 
-
-
+"because mac has issues copying to clipboard...
+nnoremap "+yy <S-v>:w !pbcopy<CR><CR>
+"will copy all lines that are in the block...
+vnoremap "+y :'<,'>w !pbcopy<CR><CR>
 
 "temporary :p
 nnoremap ;; :%s/;$//<CR>
+
+"set undo directory (will persist undo history after buffers closed A+ :fire:)
+set undofile
+set undolevels=1000
+set undodir=~/.vim/undo//
+
+"hide my shame swap files
+set directory=~/.vim/swap//
