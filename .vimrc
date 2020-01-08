@@ -1,16 +1,16 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-" on first run clone vundle how it says in its README and :PluginInstall
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+
+call vundle#begin('~/.vim/bundle')
 Plugin 'VundleVim/Vundle.vim'
+
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'morhetz/gruvbox' "colorscheme
-Plugin 'scrooloose/syntastic'
+Plugin 'dense-analysis/ale'
 Plugin 'junegunn/fzf'
 Plugin 'epmatsw/ag.vim'
 Plugin 'janko-m/vim-test'
@@ -23,7 +23,7 @@ Plugin 'mxw/vim-jsx'
 Plugin 'ntpeters/vim-better-whitespace' "highlights trailing and between/pre tab whitespaces
 Plugin 'nathanaelkane/vim-indent-guides' "gentle highlighting to view tab columns
 
-autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
+" autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 
 
 " All of your Plugins must be added before the following line
@@ -31,6 +31,7 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 "appearance
+set laststatus=2
 colorscheme gruvbox
 set guifont=Menlo\ Mono:h14
 set background=dark
@@ -69,22 +70,26 @@ let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
 "syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 2
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-"Symbols
-let g:syntastic_error_symbol = "❌"
-let g:syntastic_warning_symbol = "∙∙"
-let g:syntastic_style_error_symbol = '∙'
-"hi behind the symbols
-hi SyntasticErrorSign ctermfg=243 ctermbg=236 guifg=#777777 guibg=darkgrey
-"JS
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 2
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+""Symbols
+"let g:syntastic_error_symbol = "❌"
+"let g:syntastic_warning_symbol = "∙∙"
+"let g:syntastic_style_error_symbol = '∙'
+""hi behind the symbols
+"hi SyntasticErrorSign ctermfg=243 ctermbg=236 guifg=#777777 guibg=darkgrey
+""JS
+"let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
+
+"ALE
+let g:ale_sign_error = "❌"
+let g:ale_sign_warning = "∙∙"
+let g:ale_set_highlights = 1
 
 "The Silver Searcher -- Use ag over grep
 if executable('ag')
@@ -95,7 +100,6 @@ let g:ag_working_path_mode="r"
 "bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 "bind grep shortcut
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap <C-\> :Ag<SPACE>
 
 "fzf replacing ctrlp
@@ -127,7 +131,7 @@ nnoremap <leader>t :w \| :call <SID>RunVimTest('TestNearest')<cr>
 nnoremap <leader>A :w \| :call <SID>RunVimTest('TestSuite')<cr>
 nnoremap <leader>l :w \| :call <SID>RunVimTest('TestLast')<cr>
 
-let test#javascript#jest#file_pattern = '\vtest?/.*\.(js|jsx|coffee)$'
+let test#javascript#jest#file_pattern = '\vtest?/.*\.(js|jsx|ts|tsx|coffee)$'
 let test#javascript#jest#executable = 'npm run test'
 
 "ntpeters/vim-better-whitespace highlights trailing whitespaces and
@@ -156,13 +160,15 @@ set breakindent
 "Spellcheck
 autocmd BufRead,BufNewFile *.md setlocal spell
 autocmd FileType gitcommit setlocal spell
-"same as vim jesus tpope's unimpaired plugin mappings. newline above/below cursor without entering insert mode
-nnoremap <silent> [<space>  :<c-u>put!=repeat([''],v:count)<bar>']+1<cr>
-nnoremap <silent> ]<space>  :<c-u>put =repeat([''],v:count)<bar>'[-1<cr>
+"same as vim jesus tpope's unimpaired plugin mappings. jump location list
+nnoremap <silent> [l :lprev<CR>
+nnoremap <silent> ]l :lnext<CR>
 "THIS ALSO AFFECTS AUTOCOMPLETION
 set ignorecase
 "auto reload files that have been changed
 set autoread
+"shortcut for search in visual selection. Just populates the \%V marker
+vnoremap <C-f> <Esc>/\%V
 
 "because mac has issues copying to clipboard...
 nnoremap "+yy <S-v>:w !pbcopy<CR><CR>
@@ -179,3 +185,6 @@ set undodir=~/.vim/undo//
 
 "hide my shame swap files
 set directory=~/.vim/swap//
+
+" ensures vimdiff wraps lines
+au VimEnter * if &diff | execute 'windo set wrap' | endif
