@@ -69,23 +69,6 @@ set cursorline "highlights line cursor is on
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
-"syntastic
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 2
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-""Symbols
-"let g:syntastic_error_symbol = "❌"
-"let g:syntastic_warning_symbol = "∙∙"
-"let g:syntastic_style_error_symbol = '∙'
-""hi behind the symbols
-"hi SyntasticErrorSign ctermfg=243 ctermbg=236 guifg=#777777 guibg=darkgrey
-""JS
-"let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
-
 "ALE
 let g:ale_sign_error = "❌"
 let g:ale_sign_warning = "∙∙"
