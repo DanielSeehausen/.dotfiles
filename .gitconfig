@@ -1,17 +1,27 @@
 [user]
-  name = Daniel Seehausen
+	name = danielseehausen
   email = daniel.seehausen@gmail.com
-	signingkey = 8302632F587F0845
+  signingkey = A1BA577AAE5619D1
 [diff]
+  tool = vimdiff
 [color]
   ui = auto
 [alias]
-  st = status
-  sh = show
+  d = difftool
+  l = "!. ~/.githelpers && pretty_git_log" # Fancy logging
+  ci = clean -i
   co = checkout
-  amend = commit --amend
+  ds = diff --staged
+  sh = show
+  st = status
   can = commit --amend --no-edit
-  # Fancy logging
-  l = "!. ~/.githelpers && pretty_git_log"
+  psm = submodule update --init --recursive
+  canp = "!git commit --amend --no-edit && git push --force"
+  amend = commit --amend
 [gpg]
-	program = gpg2
+  program = gpg2
+[merge]
+  tool = vimdiff
+[difftool]
+  prompt = false
+  trustExitCode = true # Be able to abort all diffs with `:cq` or `:cquit`
