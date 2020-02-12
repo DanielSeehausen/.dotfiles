@@ -1,3 +1,5 @@
+let $BASH_ENV = "~/.bash_aliases"
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -72,7 +74,7 @@ let &t_EI = "\e[2 q"
 "ALE
 let g:ale_sign_error = "❌"
 let g:ale_sign_warning = "∙∙"
-let g:ale_set_highlights = 1
+let g:ale_set_highlights = 0
 
 "The Silver Searcher -- Use ag over grep
 if executable('ag')
@@ -86,6 +88,7 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 nnoremap <C-\> :Ag<SPACE>
 
 "fzf replacing ctrlp
+set hidden "to ignore unsaved changes when switching
 noremap <C-p> :FZF<CR>
 
 "vim-test (this helps with some package.json resolution instead of looking in

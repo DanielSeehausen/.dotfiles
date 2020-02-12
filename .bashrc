@@ -1,8 +1,12 @@
 # VC alias for dotfiles -- git bare repo kept in .dotfiles. See ~/.README
 # for usage instructions
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias ctags="`brew --prefix`/bin/ctags" # TODO what do?
+# Ospin specific
 alias cdd='cd ~/Development/ospin/'
+alias cdr='cd ~/Development/ospin/reactor'
+alias cdh='cd ~/Development/ospin/hambda'
+alias cdn='cd ~/Development/ospin/nexus'
+###################################
 alias ls='ls -a1F'
 alias ll='ls -alF'
 alias tar='/usr/bin/tar'
@@ -30,9 +34,11 @@ HISTFILESIZE=2000
 
 ### prompt settings ############################################################
 # set a fancy prompt (non-color, unless we know we "want" color)
+
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
+
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
@@ -51,12 +57,11 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 ### todo list cli ##############################################################
-alias t='~/todo_list_cli/index.py'
-alias tadd='~/todo_list_cli/index.py add'
-alias trem='~/todo_list_cli/index.py rem'
-alias tlist='~/todo_list_cli/index.py list'
+alias t='~/todo-list-cli/index.py'
+alias tadd='~/todo-list-cli/index.py add'
+alias trem='~/todo-list-cli/index.py rem'
+alias tlist='~/todo-list-cli/index.py list'
 ################################################################################
-
 
 
 if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
@@ -78,3 +83,16 @@ export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 
 alias python="python3.7"
 
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[ -f /Users/daniel/development/ospin/hambda/services/user/node_modules/tabtab/.completions/serverless.bash ] && . /Users/daniel/development/ospin/hambda/services/user/node_modules/tabtab/.completions/serverless.bash
+
+
+# return current vol or set if arg provided
+vol () {
+  if [ $# -eq 0 ]; then
+    osascript -e 'output volume of (get volume settings)'
+    return 1
+  fi
+  osascript -e "set Volume output volume $1"
+}
