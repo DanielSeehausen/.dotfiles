@@ -1,12 +1,11 @@
 # VC alias for dotfiles -- git bare repo kept in .dotfiles. See ~/.README
 # for usage instructions
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
 # Ospin specific
-alias cdd='cd ~/Development/ospin/'
-alias cdr='cd ~/Development/ospin/reactor'
-alias cdh='cd ~/Development/ospin/hambda'
-alias cdn='cd ~/Development/ospin/nexus'
+source ~/.ospin
 ###################################
+
 alias ls='ls -a1F'
 alias ll='ls -alF'
 alias tar='/usr/bin/tar'
@@ -17,6 +16,7 @@ export EDITOR=vim
 
 source ~/git-completion.bash
 source ~/.githelpers
+source ~/.nvm-auto-switcher.bash
 bind "set completion-ignore-case on"
 bind "set show-all-if-ambiguous on"
 

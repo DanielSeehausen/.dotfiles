@@ -75,6 +75,7 @@ let &t_EI = "\e[2 q"
 let g:ale_sign_error = "❌"
 let g:ale_sign_warning = "∙∙"
 let g:ale_set_highlights = 0
+let g:ale_lint_delay = 1000
 
 "The Silver Searcher -- Use ag over grep
 if executable('ag')
@@ -154,7 +155,7 @@ set ignorecase
 "auto reload files that have been changed
 set autoread
 "shortcut for search in visual selection. Just populates the \%V marker
-vnoremap <C-f> <Esc>/\%V
+vnoremap / <Esc>/\%V
 
 "because mac has issues copying to clipboard...
 nnoremap "+yy <S-v>:w !pbcopy<CR><CR>
@@ -174,3 +175,6 @@ set directory=~/.vim/swap//
 
 " ensures vimdiff wraps lines
 au VimEnter * if &diff | execute 'windo set wrap' | endif
+
+" set working directory to current file
+nnoremap <leader>cd :cd %:p:h<CR>
