@@ -1,0 +1,5 @@
+alias cdd='cd ~/Development/ospin/'
+alias cdr='cd ~/Development/ospin/reactor'
+alias cdh='cd ~/Development/ospin/hambda'
+alias cdm='cd ~/Development/ospin/Macrophage'
+alias cdn='cd ~/Development/ospin/nexus'

@@ -3,7 +3,7 @@
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Ospin specific
-source ~/.ospin
+source ~/.ospin.sh
 ###################################
 
 alias ls='ls -a1F'
@@ -16,7 +16,7 @@ export EDITOR=vim
 
 source ~/git-completion.bash
 source ~/.githelpers
-source ~/.nvm-auto-switcher.bash
+source ~/.nvm-auto-switcher.sh
 bind "set completion-ignore-case on"
 bind "set show-all-if-ambiguous on"
 
