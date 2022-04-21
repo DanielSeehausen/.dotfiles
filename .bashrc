@@ -2,10 +2,6 @@
 # for usage instructions
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-# Ospin specific
-source ~/.ospin.sh
-###################################
-
 alias ls='ls -a1F'
 alias ll='ls -alF'
 alias tar='/usr/bin/tar'
@@ -16,7 +12,7 @@ export EDITOR=vim
 
 source ~/git-completion.bash
 source ~/.githelpers
-source ~/.nvm-auto-switcher.sh
+
 bind "set completion-ignore-case on"
 bind "set show-all-if-ambiguous on"
 
@@ -33,21 +29,9 @@ HISTFILESIZE=2000
 ################################################################################
 
 ### prompt settings ############################################################
-# set a fancy prompt (non-color, unless we know we "want" color)
-
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\n\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \W\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-################################################################################
+export PS1="\w\n\A $ "
+# current path from home, \n, HH:MM, ' $ '
+# ^made to match bash-git-prompt roughly that takes over once in a git directory
 
 # enable color support of ls and also add handy aliases
 export CLICOLOR=1
@@ -63,15 +47,8 @@ alias trem='~/todo-list-cli/index.py rem'
 alias tlist='~/todo-list-cli/index.py list'
 ################################################################################
 
-
-if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
-  __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
-  source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
-fi
-
-export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# git-bash-prompt command line completion. for $BASH_VERSION > 4
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 # remove all local branches but master and current branch
 alias gbr='git branch | egrep -v "(master|\*)" | xargs git branch -D'
@@ -81,13 +58,6 @@ alias gbr='git branch | egrep -v "(master|\*)" | xargs git branch -D'
 # make sure fzf uses ag for vim life
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 
-alias python="python3.7"
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[ -f /Users/daniel/development/ospin/hambda/services/user/node_modules/tabtab/.completions/serverless.bash ] && . /Users/daniel/development/ospin/hambda/services/user/node_modules/tabtab/.completions/serverless.bash
-
-
 # return current vol or set if arg provided
 vol () {
   if [ $# -eq 0 ]; then
@@ -96,3 +66,21 @@ vol () {
   fi
   osascript -e "set Volume output volume $1"
 }
+
+#Add homebrew to PATH
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+### source and expose NVM dir ##################################################
+export NVM_DIR="$HOME/.nvm"
+[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh" # This loads nvm
+[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+################################################################################
+
+# Use bash git prompt
+if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
+  __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
+  GIT_PROMPT_ONLY_IN_REPO=1
+  source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
+fi
+
+echo '.bashrc loaded'
